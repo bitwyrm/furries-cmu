@@ -88,8 +88,9 @@
 		overflow: hidden;
 		border: 2px solid var(--ink);
 		background-color: var(--tomato);
-		background-image: radial-gradient(var(--ink) 0.8px, transparent 0.8px);
-		background-size: 9px 9px;
+		background-image: url('/fur-strands.svg'), radial-gradient(var(--ink) 0.8px, transparent 0.8px);
+		background-size: 220px 220px, 9px 9px;
+		background-blend-mode: screen, normal;
 	}
 
 	.scene-blue { background-color: var(--blue); }
