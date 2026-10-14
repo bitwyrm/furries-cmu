@@ -4,5 +4,8 @@ import tailwindcss from '@tailwindcss/vite';
 import { defineConfig } from 'vite';
 
 export default defineConfig({
-	plugins: [tailwindcss(), sveltekit({ adapter: adapter() })]
+	plugins: [tailwindcss(), sveltekit({ adapter: adapter() })],
+	server: {
+		allowedHosts: true
+	}
 });

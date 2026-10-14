@@ -1,6 +1,6 @@
 # Furries@CMU
 
-A rough, review-ready SvelteKit prototype for the Furries@CMU club website. It follows the handmade pixel-zine direction in [`docs/figma.md`](docs/figma.md), with placeholder content where the club still needs to provide photos, its logo, the Discord invite, or officer details.
+A rough, review-ready SvelteKit prototype for the Furries@CMU club website. It follows the handmade pixel-zine direction in [`docs/figma.md`](docs/figma.md), with placeholders for photos, the club logo, and officer details.
 
 ## Run locally
 

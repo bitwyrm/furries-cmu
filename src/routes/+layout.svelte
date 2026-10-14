@@ -2,6 +2,35 @@
 	import '../app.css';
 	import { page } from '$app/state';
 	import { discordInviteUrl, siteContent } from '#lib/content.js';
+
+	function relativeRouteHref(targetPath, pathname) {
+		const routeSuffix = pathname.match(/\/(?:events|officers)\/?$/)?.[0];
+		const basePath = routeSuffix ? pathname.slice(0, -routeSuffix.length) : pathname.replace(/\/$/, '');
+		const currentSegments = pathname.split('/').filter(Boolean);
+		const targetSegments = `${basePath}${targetPath}`.split('/').filter(Boolean);
+		let sharedSegments = 0;
+
+		while (
+			sharedSegments < currentSegments.length &&
+			sharedSegments < targetSegments.length &&
+			currentSegments[sharedSegments] === targetSegments[sharedSegments]
+		) {
+			sharedSegments += 1;
+		}
+
+		const up = Array(currentSegments.length - sharedSegments).fill('..');
+		const down = targetSegments.slice(sharedSegments);
+		return `${[...up, ...down].join('/') || '.'}/`;
+	}
+
+	const navigation = $derived.by(() => {
+		const pathname = page.url.pathname;
+		return siteContent.navigation.map((item) => ({
+			...item,
+			href: relativeRouteHref(item.path, pathname)
+		}));
+	});
+	const homeHref = $derived(relativeRouteHref('/', page.url.pathname));
 </script>
 
 <svelte:head>
@@ -11,38 +40,33 @@
 </svelte:head>
 
 <div class="site-frame">
-	<div class="top-scribble" aria-hidden="true"><span>♥</span> FURRY IS A VERB <span>✳</span> MAKE SOMETHING TOGETHER <span>♥</span> FURRY IS A VERB <span>✳</span></div>
+	<div class="top-scribble" aria-hidden="true"><span>✳</span> MAKE SOMETHING TOGETHER <span>♥</span> A PAWSE FOR THE CURIOUS <span>✳</span> MAKE SOMETHING TOGETHER <span>♥</span></div>
 	<header class="site-header">
-		<a class="site-brand" href="/" aria-label="Furries at CMU home">
+		<a class="site-brand" href={homeHref} aria-label="Furries at CMU home">
 			<span class="site-brand__name">Furries<span>@CMU</span></span>
-			<span class="site-brand__tag">a club thing / Pittsburgh, PA</span>
 		</a>
 		<nav class="main-nav" aria-label="Main navigation">
-			{#each siteContent.navigation as item, i}
-				<a href={item.href} aria-current={page.url.pathname === item.href ? 'page' : undefined}>
+			{#each navigation as item, i}
+				<a href={item.href} aria-current={item.href === './' ? 'page' : undefined}>
 					<span class="main-nav__number">0{i + 1}</span>{item.label}
 				</a>
 			{/each}
 		</nav>
-		{#if discordInviteUrl}
-			<a class="header-discord" href={discordInviteUrl} target="_blank" rel="noreferrer">Discord <span>↗</span></a>
-		{:else}
-			<span class="header-discord header-discord--pending">Discord invite pending <span>↗</span></span>
-		{/if}
+		<a class="header-discord" href={discordInviteUrl} target="_blank" rel="noopener noreferrer">Discord <span>↗</span></a>
 	</header>
 
 	<slot />
 
 	<footer class="site-footer">
 		<div class="site-footer__inner">
-			<a href="/" class="footer-mark">F@C<span>✳</span></a>
-			<p>Made of people, paper, pixels, and snacks.<br /><span>Furries@CMU · Carnegie Mellon University</span></p>
+			<a href={homeHref} class="footer-mark" aria-label="Furries at CMU home">✳</a>
+			<p>Furries, furry-adjacent friends, and curious critters.<br /><span>Furries@CMU · Carnegie Mellon University</span></p>
 			<nav aria-label="Footer navigation">
-				{#each siteContent.navigation as item}
+				{#each navigation as item}
 					<a href={item.href}>{item.label}</a>
 				{/each}
 			</nav>
 		</div>
-		<div class="footer-bottom"><span>Current status: making it up as we go</span><span>✳ NO ONE NEEDS A COSTUME TO BELONG ✳</span></div>
+		<div class="footer-bottom"><span>MAKE SOMETHING TOGETHER</span><span>✳ NO FURSUIT NEEDED ✳</span></div>
 	</footer>
 </div>

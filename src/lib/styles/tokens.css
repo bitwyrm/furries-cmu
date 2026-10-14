@@ -1,0 +1,25 @@
+:root {
+	/* Palette tokens: a single registry for shared colors and alpha channels. */
+	--color-cream: #f7e2c5;
+	--rgb-cream: 247, 226, 197;
+	--color-gold: #f7d457;
+	--rgb-gold: 247, 212, 87;
+	--color-plum: #241b38;
+	--rgb-plum: 36, 27, 56;
+	--color-indigo: #262341;
+	--rgb-indigo: 38, 35, 65;
+	--color-raspberry: #c51e4a;
+	--rgb-raspberry: 197, 30, 74;
+	--color-terracotta: #f3c9b4;
+	--rgb-terracotta: 243, 201, 180;
+	--color-coral: #f34f30;
+	--rgb-coral: 243, 79, 48;
+	--color-orange: #ff8b3d;
+	--rgb-orange: 255, 139, 61;
+	--color-electric-blue: #365be9;
+	--rgb-electric-blue: 54, 91, 233;
+
+	/* Shared type stacks. */
+	--font-pixel: 'Silkscreen', 'Courier New', monospace;
+	--font-mono: 'IBM Plex Mono', 'Courier New', monospace;
+}
